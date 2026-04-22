@@ -1,33 +1,33 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
 
+from random import choice
+window_titles = ["App1", "App2", "App3", "App4", "App5", "App6", "App7", "App8", "App9", "Something is very, very bad"]
+
 class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.button_is_checked = True
         self.setWindowTitle("My App")
 
-        self.button = QPushButton("Click Me")
-        self.button.setCheckable(True)
-#        button.clicked.connect(self.the_button_was_clicked)
-#        button.clicked.connect(self.the_button_was_toggled)
-        self.button.released.connect(self.the_button_was_released)
-        self.button.setChecked(self.button_is_checked)
+        self.button = QPushButton("Click me!")
+        self.button.clicked.connect(self.the_button_was_clicked)
+
+        self.windowTitleChanged.connect(self.the_window_title_changed)
 
         self.setCentralWidget(self.button)
 
-#    def the_button_was_clicked(self):
-#        print("the button was clicked")
+    def the_button_was_clicked(self):
+        print("Clicked!")
+        new_window_title = choice(window_titles)
+        print(f"Changing window title to {new_window_title}")
+        self.setWindowTitle(new_window_title)
 
-#    def the_button_was_toggled(self, checked):
-#        print(f"Checked: {checked}")
-#        self.button_is_checked = checked
-#        print(self.button_is_checked)
+    def the_window_title_changed(self, window_title):
+        print(f"Window title changed to {window_title}")
 
-    def the_button_was_released(self):
-        self.button_is_checked = self.button.isChecked()
-        print(self.button_is_checked)
+        if window_title == "Something is very, very bad":
+            self.button.setDisabled(True)
 
 
 app = QApplication(sys.argv)

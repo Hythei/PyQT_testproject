@@ -1,33 +1,48 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
 
-from random import choice
-window_titles = ["App1", "App2", "App3", "App4", "App5", "App6", "App7", "App8", "App9", "Something is very, very bad"]
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QVBoxLayout, QWidget, QTextEdit
+
 
 class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.setMouseTracking(True)
+        self.label = QLabel("Click within this window")
+        self.label.setMouseTracking(True)
+        self.setCentralWidget(self.label)
         self.setWindowTitle("My App")
 
-        self.button = QPushButton("Click me!")
-        self.button.clicked.connect(self.the_button_was_clicked)
 
-        self.windowTitleChanged.connect(self.the_window_title_changed)
 
-        self.setCentralWidget(self.button)
+    def mousePressEvent(self, e):
+        if e.button() == Qt.MouseButton.LeftButton:
+            self.label.setText("LEFT HAS BEEN CLICKED")
+        elif e.button() == Qt.MouseButton.RightButton:
+            self.label.setText("RIGHT HAS BEEN CLICKED")
+        elif e.button() == Qt.MouseButton.MiddleButton:
+            self.label.setText("MIDDLE HAS BEEN CLICKED")
 
-    def the_button_was_clicked(self):
-        print("Clicked!")
-        new_window_title = choice(window_titles)
-        print(f"Changing window title to {new_window_title}")
-        self.setWindowTitle(new_window_title)
+    def mouseReleaseEvent(self, e):
+        if e.button() == Qt.MouseButton.LeftButton:
+            self.label.setText("mouseReleaseEvent LEFT")
 
-    def the_window_title_changed(self, window_title):
-        print(f"Window title changed to {window_title}")
+        elif e.button() == Qt.MouseButton.MiddleButton:
+            self.label.setText("mouseReleaseEvent MIDDLE")
 
-        if window_title == "Something is very, very bad":
-            self.button.setDisabled(True)
+        elif e.button() == Qt.MouseButton.RightButton:
+            self.label.setText("mouseReleaseEvent RIGHT")
+
+    def mouseDoubleClickEvent(self, e):
+        if e.button() == Qt.MouseButton.LeftButton:
+            self.label.setText("mouseDoubleClickEvent LEFT")
+
+        elif e.button() == Qt.MouseButton.MiddleButton:
+            self.label.setText("mouseDoubleClickEvent MIDDLE")
+
+        elif e.button() == Qt.MouseButton.RightButton:
+            self.label.setText("mouseDoubleClickEvent RIGHT")
 
 
 app = QApplication(sys.argv)

@@ -14,6 +14,7 @@ from PyQt6.QtWidgets import (
     QMainWindow,
     QSlider,
     QSpinBox,
+    QGraphicsPixmapItem
 )
 
 class MainWindow(QMainWindow):
@@ -21,14 +22,13 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("My App")
 
-        widget = QLabel("HELLO")
-        font = widget.font()
-        font.setPointSize(30)
-        widget.setFont(font)
-        widget.setAlignment(
+        label = QLabel(self)
+        pixmap = QPixmap("pictures/strikekot.jpg")
+        label.setPixmap(pixmap)
+        label.setAlignment(
             Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter
         )
-        self.setCentralWidget(widget)
+        self.setCentralWidget(label)
 
 app = QApplication(sys.argv)
 w = MainWindow()

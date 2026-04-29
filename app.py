@@ -2,7 +2,7 @@ import sys
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
-from PyQt6.QtWidgets import QApplication, QComboBox, QMainWindow
+from PyQt6.QtWidgets import QApplication, QComboBox, QMainWindow, QListWidget
 
 
 class MainWindow(QMainWindow):
@@ -10,16 +10,16 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Application")
 
-        widget = QComboBox()
-        widget.addItems(["Item1", "Item2", "Item3"])
+        widget = QListWidget()
+        widget.addItems(["Item 1", "Item 2", "Item 3"])
 
-        widget.currentIndexChanged.connect(self.index_changed)
+        widget.currentItemChanged.connect(self.index_changed)
         widget.currentTextChanged.connect(self.text_changed)
 
         self.setCentralWidget(widget)
 
     def index_changed(self, i):
-        print(i)
+        print(i.text())
 
     def text_changed(self, s):
         print(s)
